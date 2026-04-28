@@ -1,0 +1,23 @@
+{
+  "skill_name": "evolution",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "我们刚做完一个 session。请你复盘：这次主要是修一个 skill 的命名和 memory 分类问题。顺便把值得长期记住的东西记下来。已知信息：我长期偏好你回答短一些；这个仓库本周的重点是把 skill 体系整理顺；另外 evolution 这个 skill 文件在 /Users/kafkal/.claude/skills/evolution/SKILL.md。请告诉我哪些该写 memory，哪些不该写。",
+      "expected_output": "Produces a retrospective that distinguishes user-level preferences from project context, avoids saving the file path itself as memory, and explicitly says what memory updates would be appropriate.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Reflect on this session and learn from it. We changed a skill, discussed whether /evo should exist, and clarified that there is no hidden self-modification. I also told you that when I ask for direct answers, don't bury them under long explanations. Please summarize what happened, what you should do differently next time, and what if anything should be saved to memory.",
+      "expected_output": "Produces a concise retrospective, preserves the user preference as durable guidance, and explicitly avoids claiming hidden persistent self-improvement beyond memory.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "做个复盘，并决定哪些内容应该进入 memory。背景：用户这次正在一个特定项目里处理合规驱动的 auth 改造；用户本人是资深 Go 工程师，但第一次碰这个项目的前端；代码里可以直接看到路由文件和 auth 模块位置。请区分 user / project / do not save，并说明理由。",
+      "expected_output": "Correctly classifies user expertise as user memory, compliance-driven auth rewrite as project memory, and codebase paths/module locations as do-not-save because they are derivable from files.",
+      "files": []
+    }
+  ]
+}
