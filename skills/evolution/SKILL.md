@@ -1,11 +1,11 @@
 ---
 name: evolution
-description: Review the current session end-to-end, extract durable lessons, and turn them into sharper future behavior. Use whenever the user asks Claude to reflect on this session, summarize what happened, capture mistakes and improvements, learn from the work, strengthen future performance. Also use when the user wants a postmortem, retrospective, self-improvement pass, or wants Claude to consolidate session context into reusable guidance.
+description: Review the current session end-to-end, extract durable lessons, and turn them into sharper future behavior. Use whenever the user asks Claude to reflect on this session, summarize what happened and what to learn from it, capture mistakes and improvements, learn from the work, strengthen future performance. Also use when the user wants a postmortem, retrospective, self-improvement pass, or wants Claude to consolidate session context into reusable guidance.
 ---
 
 # Evolution
 
-Use this skill to perform a disciplined retrospective on the current session so future work becomes faster, safer, and higher quality.
+Use this skill to perform a disciplined retrospective on the current session so future work becomes faster and higher quality.
 
 ## When this skill is appropriate
 
@@ -76,44 +76,27 @@ Examples:
 - "When the user wants self-improvement, separate durable feedback from one-off task details before writing memory."
 - "If a better solution exists, state the tradeoff clearly instead of rewriting history to make the first path look ideal."
 
-### 4. Save durable memory when warranted
+### 4. Persist durable findings — memory or structural fixes
 
-If the retrospective reveals stable user preferences, workflow guidance, or long-lived project context, save it using the memory system.
+Not every lesson belongs in memory. Route each finding to the right place:
 
-Only save information that is likely to matter in future conversations. Do not save ephemeral task logs.
+- **Memory** (user / feedback / project / reference, per the system's auto memory rules): stable user preferences, durable collaboration feedback, ongoing project constraints, external resource pointers.
+- **Skill edit**: if the lesson is "this skill missed a case" or "this skill's guidance was unclear", propose a SKILL.md change instead of writing memory.
+- **CLAUDE.md edit**: if the lesson should bind every session in this repo, propose a CLAUDE.md change.
+- **Hook (settings.json)**: if the lesson is an automated behavior ("always run X before Y"), propose a hook — the harness runs hooks, memory does not.
 
-#### How to classify memory writes
+Retrospective-specific memory clarifications (on top of the system's auto memory rules):
 
-Use these rules when deciding what to save:
+- A single in-session correction is not yet a durable preference. Save as **feedback** only if the user signaled it should hold across sessions ("from now on", "always") or showed it repeatedly.
+- Anything directly inspectable in the repo (file paths, module locations, code structure) is not memory. Save only the non-obvious *motivation* behind it, as **project**, when it would not be re-derivable from the code.
+- A short-lived weekly focus is **do not save** unless the user makes clear it will keep shaping decisions.
+- When uncertain between **user** and **project**, ask: "Does this describe the person, or the work they are doing right now?"
 
-- **user**: facts about the user that likely remain true across projects, such as role, expertise, goals, or durable preferences
-- **feedback**: instructions about how Claude should work with the user, especially corrections, validated approaches, and collaboration preferences
-- **project**: non-obvious context about the current project, business constraints, deadlines, motivations, or stakeholders that is not reliably derivable from the codebase
-- **reference**: pointers to external systems or resources where future context can be found; do not use this for files, paths, or docs that already live inside the repository or local workspace
-- **do not save**: ephemeral task history, routine session logs, temporary decisions, or facts that can be re-derived by reading the code, git history, or local files
-
-Use these quick tests:
-
-- If it would still matter in a different repository, it is usually **user** or **feedback**.
-- If it matters because of this project's current business context, it is usually **project**.
-- If it is only a short-lived weekly focus, temporary execution state, or current-task status update, default to **do not save** unless the user explicitly indicates that the time window or deadline will continue to shape future decisions.
-- If it tells Claude where to look outside the repo, it is usually **reference**.
-- If it points to a file path, module location, route file, AGENTS.md, CLAUDE.md, or code structure that is already inside the repo or local workspace, do not save it as **reference** or **project** memory just because it is useful.
-- If it names files, functions, code structure, or implementation details that can be inspected directly, do not save it as memory unless the non-obvious part is the motivation or constraint behind it.
-
-When uncertain between **user** and **project**, ask: "Does this describe the person, or the work they are doing right now?"
-
-When uncertain between **project** and **do not save**, ask: "Is this an ongoing project constraint, or just this week’s status / this task’s temporary state?"
-
-Examples:
-
-- "Auth rewrite is driven by compliance requirements" -> usually **project**
-- "This week the team is mostly cleaning up skills" -> usually **do not save** unless the user makes clear that this time window will keep affecting future prioritization
-- "Merge freeze starts 2026-05-02" -> usually **project**, because the dated constraint will affect future decisions until it passes
+Always show what was saved (and the chosen type) or what structural edit was proposed, so the user can correct the classification.
 
 ### 5. Report the retrospective
 
-Use this structure unless the user asked for a different format:
+Use this structure unless the user asked for a different format. If a section has nothing real to report, write "None" — do not invent content to fill the structure. For very short or low-content sessions, prefer the minimal version below.
 
 ## Session objective
 - What the user wanted in 1-3 bullets.
@@ -137,9 +120,11 @@ Use this structure unless the user asked for a different format:
 
 ## Reusable rules for future sessions
 - Short imperative bullets Claude can internalize.
+- A rule listed here is session-local unless it is also written to **feedback** memory in step 4. Mark each rule as either "→ saved to memory" or "session-only" so the user knows which will actually persist.
 
 ## Memory updates
-- List any memory saved, updated, or removed.
+- List any memory saved, updated, or removed, with the chosen type.
+- Also list any proposed skill / CLAUDE.md / hook edits.
 - If none, say "None."
 
 ## Important quality bar
@@ -149,6 +134,8 @@ This skill is for learning, not self-congratulation.
 - Be candid about mistakes.
 - Do not invent lessons where there were none.
 - Do not claim improvement without naming the mechanism.
+- Do not promote a single in-session comment into a permanent preference. Wait for an explicit signal ("from now on", "always") or a repeated pattern.
+- Do not save facts that can be re-derived from the repo (paths, function names, module layout) as memory. Save only the non-obvious motivation behind them.
 - Keep recommendations grounded in what actually happened in the session.
 - Prefer a short truthful retrospective over a long vague one.
 
