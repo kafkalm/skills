@@ -1,9 +1,9 @@
 ---
-name: evolution
+name: evolve
 description: Review the current session end-to-end, extract durable lessons, and turn them into sharper future behavior. Use whenever the user asks Claude to reflect on this session, summarize what happened and what to learn from it, capture mistakes and improvements, learn from the work, strengthen future performance. Also use when the user wants a postmortem, retrospective, self-improvement pass, or wants Claude to consolidate session context into reusable guidance.
 ---
 
-# Evolution
+# Evolve
 
 Use this skill to perform a disciplined retrospective on the current session so future work becomes faster and higher quality.
 
